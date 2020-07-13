@@ -1,0 +1,136 @@
+:root {
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	--tile-size: 4rem;
+	--light-colour: #f0d9b5;
+	--dark-colour: #946f51;
+	--black-piece-colour: rgb(248, 98, 98);
+	--white-piece-colour: rgb(233, 233, 233);
+	--shadow: #000;
+	--piece-offset: 6px;
+	
+
+	--move-margin: calc((var(--tile-size) - var(--move-size)) * 0.5);
+	--move-size: calc(0.3 * var(--tile-size));
+	--move-colour: rgba(0, 0, 0, 0.4);
+	--move-border-radius: calc(0.2 * var(--move-size));
+
+	--board-size: calc(var(--tile-size) * 8);
+
+	--piece-width: calc(.6 * var(--tile-size));
+	--piece-height: calc(.55 * var(--tile-size));
+
+	--piece-margin-top-bottom: calc((var(--tile-size) - (2 * var(--piece-offset) + var(--piece-height))) * 0.5);
+	--piece-margin-left-right: calc((var(--tile-size) - (2 * var(--piece-offset) + var(--piece-width))) * 0.5);
+
+	--crown-outer-size: 20px;
+	--crown-inner-size: calc(var(--crown-outer-size) * 0.6);
+	--crown-outer-border-radius: calc(var(--crown-outer-size) * 0.5);
+	--crown-inner-border-radius: calc(var(--crown-inner-size) * 0.5);
+	--crown-inner-margin: calc((var(--tile-size) - var(--crown-inner-size)) * 0.5);
+	--crown-outer-margin: calc((var(--tile-size) - var(--crown-outer-size)) * 0.5);
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.wrapper {
+	width: 80vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	margin: auto;
+}
+.boardDisplay {
+	width: var(--board-size);
+	height: var(--board-size);
+	display: flex;
+	flex-wrap: wrap;
+}
+.tile {
+	width: var(--tile-size);
+	height: var(--tile-size);
+	position: relative;
+}
+.tile.light {
+	background-color: var(--light-colour);
+}
+.tile.dark {
+	background-color: var(--dark-colour);
+}
+.tile.move::after {
+	content: "";
+	display: inline-block;
+	position: absolute;
+	width: var(--move-size);
+	height: var(--move-size);
+	z-index: 1000;
+	margin: var(--move-margin);
+	border-radius: var(--move-border-radius);
+	background-color: var(--move-colour);
+}
+
+.piece {
+	width: inherit;
+	height: inherit;
+	position: relative;
+	pointer-events: none;
+}
+.piece::after,
+.piece::before {
+	content: "";
+	position: absolute;
+	display: inline-block;
+	margin-left: var(--piece-margin-left-right);
+	margin-right: var(--piece-margin-left-right);
+	margin-top: var(--piece-margin-top-bottom);
+	margin-bottom: var(--piece-margin-top-bottom);
+	width: var(--piece-width);
+	height: var(--piece-height);
+	border-radius: 50%;
+	border: var(--piece-offset) solid var(--shadow);
+}
+.piece.black::before {
+	background-color: var(--black-piece-colour);
+	z-index: 20;
+}
+.piece.white::before {
+	background-color: var(--white-piece-colour);
+	z-index: 20;
+}
+.piece::after {
+	top: var(--piece-offset);
+	background-color: var(--shadow);
+	z-index: 10;
+}
+.king span.crown::before {
+	content: "";
+	position: absolute;
+	display: inline-block;
+	background-color: var(--shadow);
+	width: var(--crown-outer-size);
+	height: var(--crown-outer-size);
+	margin: var(--crown-outer-margin);
+	z-index: 1000;
+	border-radius: var(--crown-outer-border-radius);
+}
+.king span.crown::after {
+	content: "";
+	position: absolute;
+	display: inline-block;
+	width: var(--crown-inner-size);
+	height: var(--crown-inner-size);
+	z-index: 1001;
+	margin: var(--crown-inner-margin);
+	border-radius: var(--crown-inner-border-radius);
+}
+.king.black span.crown::after {
+	background-color: var(--black-piece-colour);
+}
+.king.white span.crown::after {
+	background-color: var(--white-piece-colour);
+}
